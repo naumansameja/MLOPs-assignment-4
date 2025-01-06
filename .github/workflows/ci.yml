@@ -3,7 +3,7 @@ name: CI/CD for ML Model Deployment
 on:
   push:
     branches:
-      - master  # Change to main if that's the branch you're using
+      - master
 
 jobs:
   deploy:
@@ -27,18 +27,16 @@ jobs:
     - name: Login to Hugging Face
       run: huggingface-cli login --token ${{ secrets.HF_TOKEN }}
 
-    - name: Copy app.py and other files to Hugging Face Space
+    - name: Deploy app to Hugging Face Space
       run: |
-        mkdir -p space_dir  # Create directory for Hugging Face Space
-        cp ../../app.py space_dir/  # Correct path to app.py
-        # Add any other necessary files to the space directory:
-        cp -r ../../your_model_files/* space_dir/  # Replace with actual model file path
+        # Clone the space directory
+        git clone https://huggingface.co/spaces/naumansamejaa/sentiment_analysis
+        cd sentiment_analysis
 
-    - name: Push files to Hugging Face Space
-      run: |
-        cd space_dir
-        git init
-        git remote add origin https://huggingface.co/spaces/naumansamejaa/sentiment_analysis
-        git add .
-        git commit -m "Deploying model to Hugging Face Space"
-        git push -u origin master  # Change to main if that's the branch you're using
+        # Copy the app.py from your project directory to the Hugging Face Space directory
+        cp ../app.py .
+
+        # Push changes to Hugging Face Space
+        git add app.py
+        git commit -m "Deploying app.py to Hugging Face Space"
+        git push
