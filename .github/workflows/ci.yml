@@ -36,7 +36,9 @@ jobs:
         # Copy the app.py from your project directory to the Hugging Face Space directory
         cp ../app.py .
 
-        # Push changes to Hugging Face Space
-        git add app.py
+        # Add the changes, commit and push to Hugging Face Space
+        git config --global user.email "nauman.samejaa@gmail.com"
+        git config --global user.name "nauman ishaq"
+        git add .
         git commit -m "Deploying app.py to Hugging Face Space"
         git push
