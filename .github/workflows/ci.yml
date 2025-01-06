@@ -27,15 +27,20 @@ jobs:
     - name: Login to Hugging Face
       run: huggingface-cli login --token ${{ secrets.HF_TOKEN }}
 
-    - name: Deploy model to Hugging Face Spaces
+    - name: Clone Hugging Face Space
       run: |
-        # Define space name
-        SPACE_NAME="naumansamejaa/sentiment_analysis"  # Space name you created
-        # Clone the space repo
-        git clone https://huggingface.co/spaces/${SPACE_NAME}
+        git clone https://huggingface.co/spaces/naumansamejaa/sentiment_analysis
         cd sentiment_analysis
-        # Add your model or app files to the cloned space repo
-        cp -r ../path_to_your_model_or_app/* .  # Adjust the path to your model/app files
+
+    - name: Copy app.py and other files to Hugging Face Space
+      run: |
+        cp ../app.py .  # Copy the app.py from your project directory to the Hugging Face Space directory
+         # Adjust the path if you have additional files or directories
+
+    - name: Deploy model to Hugging Face Space
+      run: |
+        echo "Deploying model to Hugging Face Space..."
+        # Any other deployment steps required by Hugging Face, such as pushing to the space repository
         git add .
-        git commit -m "Deploy model update"
-        git push
+        git commit -m "Deploy app"
+        git push origin main  # Make sure to push to the correct branch of your Hugging Face space
