@@ -3,7 +3,7 @@ name: CI/CD for ML Model Deployment
 on:
   push:
     branches:
-      - master  # Change to your branch if needed
+      - master
 
 jobs:
   deploy:
@@ -11,9 +11,9 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Set up Python
+    - name: Set up Python 3.8
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
@@ -22,13 +22,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install huggingface_hub
 
-    - name: Login to Hugging Face CLI
-      run: echo "${{ secrets.HF_TOKEN }}" | huggingface-cli login --token ${{ secrets.HF_TOKEN }}
-      env:
-        HUGGINGFACE_HUB_TOKEN: ${{ secrets.HF_TOKEN }}  # Pass the token as an environment variable
+    - name: Login to Hugging Face
+      run: echo "${{ secrets.HF_TOKEN }}" | huggingface-cli login --token
 
-    - name: Deploy model to Hugging Face
+    - name: Deploy model to Hugging Face Spaces
       run: |
-        # Add your deployment script or commands here
-        echo "Model deployment script running"
+        # Add your commands here to deploy the model or push it to Hugging Face
+        echo "Deplo
