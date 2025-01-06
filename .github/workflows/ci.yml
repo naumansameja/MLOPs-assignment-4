@@ -3,7 +3,7 @@ name: CI/CD for ML Model Deployment
 on:
   push:
     branches:
-      - main  # or the default branch you use
+      - master  # or the default branch you use
 
 jobs:
   deploy:
