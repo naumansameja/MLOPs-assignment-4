@@ -29,5 +29,13 @@ jobs:
 
     - name: Deploy model to Hugging Face Spaces
       run: |
-        # Add your commands here to deploy the model or push it to Hugging Face
-        echo "Deploying model to Hugging Face Spaces..."
+        # Define space name
+        SPACE_NAME="naumansamejaa/sentiment_analysis"  # Space name you created
+        # Clone the space repo
+        git clone https://huggingface.co/spaces/${SPACE_NAME}
+        cd sentiment_analysis
+        # Add your model or app files to the cloned space repo
+        cp -r ../path_to_your_model_or_app/* .  # Adjust the path to your model/app files
+        git add .
+        git commit -m "Deploy model update"
+        git push
